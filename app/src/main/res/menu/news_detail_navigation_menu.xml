@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_mark_favourite"
+        android:icon="@drawable/ic_favorite_24dp"
+        android:title="@string/title_mark_favorite" />
+
+    <item
+        android:id="@+id/navigation_share"
+        android:icon="@drawable/ic_share_24dp"
+        android:title="@string/title_share" />
+
+    <item
+        android:id="@+id/navigation_open_in_browser"
+        android:icon="@drawable/ic_open_in_browser_24dp"
+        android:title="@string/title_open_in_browser" />
+</menu>

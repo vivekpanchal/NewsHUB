@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.vivekpanchal.newshub">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".UI.activities.NewsDisplayActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".UI.activities.NewsDetailDisplayActivity"
+            android:theme="@style/NewsDetailsDisplayTheme" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="dd17847bcca155207d9a281b9ae2ca7ce8b2f6dc"
+            />
+
+        <activity android:name=".UI.activities.UsersInterestsActivity" />
+        <activity android:name=".UI.activities.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="com.vivekpanchal.newshub.widget.NewsWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/news_widget_provider_info" />
+        </receiver>
+
+        <service
+            android:name="com.vivekpanchal.newshub.services.NewsUpdateService"
+            android:exported="false" />
+
+        <receiver
+            android:name="com.vivekpanchal.newshub.receivers.NetworkChangeReceiver"
+            android:enabled="true"
+            android:exported="false"></receiver>
+    </application>
+
+</manifest>

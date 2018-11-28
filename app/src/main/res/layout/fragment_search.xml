@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_frag_search_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+
+            android:id="@+id/et_search_text_frag_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_search_24dp"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:hint="@string/search_query_hint"
+            android:inputType="text"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_search_frag_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_btn_label"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+    <include layout="@layout/loading_layout" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_searched_news_feeds_frag_search"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_frag_search_container" />
+
+</android.support.constraint.ConstraintLayout>

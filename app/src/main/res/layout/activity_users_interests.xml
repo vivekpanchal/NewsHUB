@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    tools:context=".UI.activities.UsersInterestsActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/splash_screen_choose_interests"
+        android:gravity="center"
+        style="@style/SplashScreenTextViewStyle"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_interest_choices_act_user_interests"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/tv_selected_choices_act_user_interests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/splash_screen_no_choices_selected"
+        android:gravity="center"
+        style="@style/SplashScreenTextViewStyle"/>
+
+    <TextView
+        android:id="@+id/tv_choice_count_act_user_interests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:text="@string/splash_screen_choices_count_text"
+        style="@style/SplashScreenTextViewStyle"/>
+
+
+    <Button
+        android:id="@+id/btn_next_act_user_interests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/BottomSheetButtonStyle"
+        android:drawableEnd="@drawable/ic_arrow_right_24dp"
+        android:text="@string/splash_screen_next_btn"
+        android:layout_marginTop="2dp"/>
+
+</LinearLayout>

@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">News HUB</string>
+    <string name="title_top_headlines">Top Headlines</string>
+    <string name="title_your_feed">Your Feed</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_search">Search</string>
+    <string name="title_mark_favorite">Mark Favorite</string>
+    <string name="title_share">Share</string>
+    <string name="title_open_in_browser">View Story</string>
+
+    <string name="news_image_content_desc">News Headline Image</string>
+    <string name="date_label">Date</string>
+    <string name="author_label">Author</string>
+    <string name="description_label">Description</string>
+
+    // TextView text messages
+    <string name="splash_screen_choose_interests">Choose Your Interests:</string>
+    <string name="splash_screen_no_choices_selected">No choices selected yet</string>
+    <string name="splash_screen_choices_count_text">3 more choices to go!</string>
+
+    <string name="internet_conn_not_available">Connection Lost.</string>
+
+    <string name="removed_from_fav">Removed from Favorites</string>
+    <string name="added_to_fav">Added to Favorites</string>
+    <string name="intent_action_open">Open with</string>
+    <string name="source_label">Source:</string>
+    <string name="toast_message_enter_search_text">Enter some text to be searched</string>
+    <string name="api_search_latest">latest</string>
+
+    // Image View content description
+    <string name="content_description_user_interest_image">Interest Type item image</string>
+    <string name="no_favorites_found">No Favorites</string>
+    <string name="loading_news_feeds">Loading feeds…</string>
+    <string name="error_loading_feeds">Error occurred</string>
+    <string name="splash_screen_img_desc">Image displaying a new paper</string>
+    <string name="no_favorites_content_desc">Image to display no favorite items</string>
+    <string name="loading_failed_image_content_desc">Error image when loading failed</string>
+    <string name="widget_image_scrim_content_desc">Widget Image background scrim</string>
+
+    // Button text
+    <string name="retry_btn_text">Retry</string>
+    <string name="search_query_hint">Enter search query here</string>
+    <string name="search_btn_label">Search</string>
+    <string name="choice_one">Choice 1</string>
+    <string name="choice_two">Choice 2</string>
+    <string name="choice_three">Choice 3</string>
+    <string name="splash_screen_next_btn">Next</string>
+
+    // Empty Data messages
+    <string name="no_description_message">No description available</string>
+    <string name="no_author_message">Author unknown</string>
+    <string name="no_source_available">Unknown source</string>
+    <string name="appwidget_news_headline_text">News Headlines</string>
+    <string name="appwidget_news_date_text">News Date</string>
+    <string name="appwidget_image_desc">Widget news image</string>
+    <string name="add_widget">Add widget</string>
+</resources>

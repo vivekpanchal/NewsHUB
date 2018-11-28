@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_top_headlines"
+        android:icon="@drawable/ic_trending_up_24dp"
+        android:title="@string/title_top_headlines" />
+
+    <item
+        android:id="@+id/navigation_your_feed"
+        android:icon="@drawable/ic_person_24dp"
+        android:title="@string/title_your_feed" />
+
+    <item
+        android:id="@+id/navigation_favourites"
+        android:icon="@drawable/ic_favorite_24dp"
+        android:title="@string/title_favorites" />
+
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_search_24dp"
+        android:title="@string/title_search" />
+
+</menu>
