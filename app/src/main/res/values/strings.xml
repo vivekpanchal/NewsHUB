@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">News HUB</string>
     <string name="title_top_headlines">Top Headlines</string>
-    <string name="title_your_feed">Your Feed</string>
+    <string name="title_your_feed">My Feed</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_search">Search</string>
     <string name="title_mark_favorite">Mark Favorite</string>
