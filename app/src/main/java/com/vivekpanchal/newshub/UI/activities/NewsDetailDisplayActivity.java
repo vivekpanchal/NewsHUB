@@ -5,9 +5,9 @@ import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,21 +21,42 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
 import com.vivekpanchal.newshub.R;
+import com.vivekpanchal.newshub.database.AppDatabase;
 import com.vivekpanchal.newshub.database.AppExecutors;
 import com.vivekpanchal.newshub.database.NewsHeadlineEntity;
-
-
-import com.vivekpanchal.newshub.database.AppDatabase;
 import com.vivekpanchal.newshub.models.NewsFeedModel;
 import com.vivekpanchal.newshub.utility.Constants;
 import com.vivekpanchal.newshub.utility.Utility;
 
-public class NewsDetailDisplayActivity extends AppCompatActivity implements View.OnClickListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private TextView newsHeadline, newsDate, newsAuthor, newsSource;
+public class NewsDetailDisplayActivity extends AppCompatActivity implements View.OnClickListener {
+    @BindView(R.id.tv_news_headline_act_news_detail_display)
+    private TextView newsHeadline;
+    @BindView(R.id.tv_date_act_news_detail_display)
+    private TextView newsDate;
+    @BindView(R.id.tv_author_act_news_detail_display)
+    private TextView newsAuthor;
+    @BindView(R.id.tv_source_act_news_detail_display)
+    private TextView newsSource;
+
+    @BindView(R.id.img_view_act_news_detail)
     private ImageView newsImage;
+    @BindView(R.id.tv_desc_act_news_detail_display)
     private TextView newsDescription;
-    private Button shareStory, viewFullStory, markFavoriteStory;
+
+    @BindView(R.id.btn_share_act_news_details_display)
+    private Button shareStory;
+    @BindView(R.id.btn_open_in_browser_act_news_details_display)
+    private Button viewFullStory;
+
+    @BindView(R.id.btn_mark_fav_act_news_details_display)
+    private Button markFavoriteStory;
+
+    @BindView(R.id.banner_ad_act_news_detail_display)
+    private AdView bannerAd;
+
     private String newsUrl;
     private static final String TAG = NewsDetailDisplayActivity.class.getSimpleName();
     private AppDatabase mDb;
@@ -43,13 +64,13 @@ public class NewsDetailDisplayActivity extends AppCompatActivity implements View
     private NewsFeedModel model;
     private boolean newsIsFav;
     private NewsHeadlineEntity mNewsEntity;
-    private AdView bannerAd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail_display);
-
+        ButterKnife.bind(this);
         setUpViews();
 
         if (getIntent() != null && getIntent().hasExtra(Constants.NEWS_FEED_INTENT_EXTRA_KEY)) {
@@ -145,22 +166,9 @@ public class NewsDetailDisplayActivity extends AppCompatActivity implements View
     }
 
     private void setUpViews() {
-        newsHeadline = findViewById(R.id.tv_news_headline_act_news_detail_display);
-        newsDate = findViewById(R.id.tv_date_act_news_detail_display);
-        newsAuthor = findViewById(R.id.tv_author_act_news_detail_display);
-        newsDescription = findViewById(R.id.tv_desc_act_news_detail_display);
-        newsImage = findViewById(R.id.img_view_act_news_detail);
-        newsSource = findViewById(R.id.tv_source_act_news_detail_display);
-        bannerAd = findViewById(R.id.banner_ad_act_news_detail_display);
-
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
         bannerAd.loadAd(adRequest);
-
-        markFavoriteStory = findViewById(R.id.btn_mark_fav_act_news_details_display);
-        shareStory = findViewById(R.id.btn_share_act_news_details_display);
-        viewFullStory = findViewById(R.id.btn_open_in_browser_act_news_details_display);
-
         markFavoriteStory.setOnClickListener(this);
         shareStory.setOnClickListener(this);
         viewFullStory.setOnClickListener(this);
@@ -190,7 +198,8 @@ public class NewsDetailDisplayActivity extends AppCompatActivity implements View
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(NewsDetailDisplayActivity.this, getResources().getString(R.string.added_to_fav), Toast.LENGTH_SHORT).show();                                }
+                                    Toast.makeText(NewsDetailDisplayActivity.this, getResources().getString(R.string.added_to_fav), Toast.LENGTH_SHORT).show();
+                                }
                             });
                         }
                     }

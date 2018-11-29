@@ -69,7 +69,7 @@ public class UsersInterestsActivity extends AppCompatActivity {
                 } else if (userChoices.size() < 3) {
                     userChoices.add(Constants.userInterests.get(position).getName());
                 } else {
-                    Toast.makeText(UsersInterestsActivity.this, "You cannot enter more than 3 choices",
+                    Toast.makeText(UsersInterestsActivity.this, R.string.userIntrestError,
                             Toast.LENGTH_SHORT).show();
                 }
                 StringBuilder choicesString = new StringBuilder();
@@ -81,7 +81,7 @@ public class UsersInterestsActivity extends AppCompatActivity {
                     selectedChoices.setText(choicesString.toString());
                 else
                     selectedChoices.setText(getResources().getString(R.string.splash_screen_no_choices_selected));
-                choiceCount.setText(String.valueOf(3 - userChoices.size()) + " more choices to go!");
+                choiceCount.setText(String.valueOf(3 - userChoices.size()) + getString(R.string.numOfChoices));
                 adapter.notifyItemChanged(position);
             }
         });
@@ -95,7 +95,7 @@ public class UsersInterestsActivity extends AppCompatActivity {
                             NewsDisplayActivity.class);
                     startActivity(newsDisplayActivityIntent);
                 } else {
-                    Toast.makeText(UsersInterestsActivity.this, "Enter your interest first!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UsersInterestsActivity.this, R.string.enter_Intrests, Toast.LENGTH_SHORT).show();
                 }
             }
         });

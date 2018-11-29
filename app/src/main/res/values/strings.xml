@@ -54,4 +54,7 @@
     <string name="appwidget_news_date_text">News Date</string>
     <string name="appwidget_image_desc">Widget news image</string>
     <string name="add_widget">Add widget</string>
+    <string name="userIntrestError">You cannot enter more than 3 choices</string>
+    <string name="numOfChoices">more choices to go!</string>
+    <string name="enter_Intrests">Enter your interest first!</string>
 </resources>
