@@ -33,29 +33,29 @@ import butterknife.ButterKnife;
 
 public class NewsDetailDisplayActivity extends AppCompatActivity implements View.OnClickListener {
     @BindView(R.id.tv_news_headline_act_news_detail_display)
-    private TextView newsHeadline;
+    public TextView newsHeadline;
     @BindView(R.id.tv_date_act_news_detail_display)
-    private TextView newsDate;
+    public TextView newsDate;
     @BindView(R.id.tv_author_act_news_detail_display)
-    private TextView newsAuthor;
+    public TextView newsAuthor;
     @BindView(R.id.tv_source_act_news_detail_display)
-    private TextView newsSource;
+    public TextView newsSource;
 
     @BindView(R.id.img_view_act_news_detail)
-    private ImageView newsImage;
+    public ImageView newsImage;
     @BindView(R.id.tv_desc_act_news_detail_display)
-    private TextView newsDescription;
+    public TextView newsDescription;
 
     @BindView(R.id.btn_share_act_news_details_display)
-    private Button shareStory;
+    public Button shareStory;
     @BindView(R.id.btn_open_in_browser_act_news_details_display)
-    private Button viewFullStory;
+    public Button viewFullStory;
 
     @BindView(R.id.btn_mark_fav_act_news_details_display)
-    private Button markFavoriteStory;
+    public Button markFavoriteStory;
 
     @BindView(R.id.banner_ad_act_news_detail_display)
-    private AdView bannerAd;
+    public AdView bannerAd;
 
     private String newsUrl;
     private static final String TAG = NewsDetailDisplayActivity.class.getSimpleName();
