@@ -4,11 +4,14 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'dagger.hilt.android.plugin'
 
-// Secrets (NEWS_API_KEY, ADMOB_APP_ID, ADMOB_BANNER_AD_UNIT_ID) are read from the gitignored
-// local.properties file, e.g.:
+// Secrets (NEWS_API_KEY, ADMOB_APP_ID, ADMOB_BANNER_AD_UNIT_ID, signing credentials) are read
+// from the gitignored local.properties file, e.g.:
 //   NEWS_API_KEY=yourNewsApiOrgKeyHere
 //   ADMOB_APP_ID=ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy
 //   ADMOB_BANNER_AD_UNIT_ID=ca-app-pub-xxxxxxxxxxxxxxxx/yyyyyyyyyy
+//   RELEASE_KEY_ALIAS=key
+//   RELEASE_KEY_PASSWORD=yourKeyPasswordHere
+//   RELEASE_STORE_PASSWORD=yourStorePasswordHere
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -18,6 +21,9 @@ def newsApiKey = localProperties.getProperty('NEWS_API_KEY', '')
 // Defaults below are Google's official AdMob *test* IDs - safe for development builds.
 def admobAppId = localProperties.getProperty('ADMOB_APP_ID', 'ca-app-pub-3940256099942544~3347511713')
 def admobBannerAdUnitId = localProperties.getProperty('ADMOB_BANNER_AD_UNIT_ID', 'ca-app-pub-3940256099942544/6300978111')
+def releaseKeyAlias = localProperties.getProperty('RELEASE_KEY_ALIAS', 'key')
+def releaseKeyPassword = localProperties.getProperty('RELEASE_KEY_PASSWORD', '')
+def releaseStorePassword = localProperties.getProperty('RELEASE_STORE_PASSWORD', '')
 
 android {
     namespace 'com.vivekpanchal.newshub'
@@ -25,10 +31,10 @@ android {
 
     signingConfigs {
         config {
-            keyAlias 'key'
-            keyPassword 'CapstoneDone'
+            keyAlias releaseKeyAlias
+            keyPassword releaseKeyPassword
             storeFile file('../app/keystore.jks')
-            storePassword 'CapstoneDone'
+            storePassword releaseStorePassword
         }
     }
 

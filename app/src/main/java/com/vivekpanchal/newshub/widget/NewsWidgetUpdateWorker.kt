@@ -22,7 +22,10 @@ class NewsWidgetUpdateWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val result = newsRepository.getTopHeadlines()
-        val article = (result as? NewsResult.Success)?.articles?.firstOrNull() ?: return Result.retry()
+        val article = (result as? NewsResult.Success)?.articles?.firstOrNull()
+            // Leave the widget showing its last-known headline rather than burning battery/network
+            // retrying on every periodic run (e.g. while NEWS_API_KEY is unset or the network is down).
+            ?: return Result.success()
 
         val glanceIds = GlanceAppWidgetManager(applicationContext).getGlanceIds(NewsGlanceWidget::class.java)
         glanceIds.forEach { glanceId ->

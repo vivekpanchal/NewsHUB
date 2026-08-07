@@ -53,9 +53,15 @@ fun NewsListItem(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
+                        // colorStops uses fractions (0f-1f) of the gradient's bounds, unlike
+                        // startY/endY which are absolute pixels - use stops so the fade starts
+                        // 35% down the card regardless of its measured height.
                         Brush.verticalGradient(
-                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.75f)),
-                            startY = 0.35f,
+                            colorStops = arrayOf(
+                                0f to Color.Transparent,
+                                0.35f to Color.Transparent,
+                                1f to Color.Black.copy(alpha = 0.75f),
+                            ),
                         ),
                     ),
             )
