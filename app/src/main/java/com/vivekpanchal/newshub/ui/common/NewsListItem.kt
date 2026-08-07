@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -19,12 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.domain.model.Article
-import com.vivekpanchal.newshub.util.formatNewsDate
+import com.vivekpanchal.newshub.ui.theme.NewsHubExtraType
+import com.vivekpanchal.newshub.ui.theme.NewsHubShapes
+import com.vivekpanchal.newshub.ui.theme.Spacing
+import com.vivekpanchal.newshub.util.formatRelativeTime
+import com.vivekpanchal.newshub.util.isRecentEnoughToBeBreaking
 
 @Composable
 fun NewsListItem(
@@ -37,8 +39,8 @@ fun NewsListItem(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp, vertical = 4.dp),
-        shape = RoundedCornerShape(10.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        shape = NewsHubShapes.large,
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Box(modifier = Modifier.fillMaxWidth().height(250.dp)) {
             AsyncImage(
@@ -60,28 +62,41 @@ fun NewsListItem(
                             colorStops = arrayOf(
                                 0f to Color.Transparent,
                                 0.35f to Color.Transparent,
-                                1f to Color.Black.copy(alpha = 0.75f),
+                                1f to Color.Black.copy(alpha = 0.78f),
                             ),
                         ),
                     ),
             )
+
+            if (isRecentEnoughToBeBreaking(article.publishedAt)) {
+                LiveBadge(
+                    label = "BREAKING",
+                    modifier = Modifier.align(Alignment.TopStart).padding(Spacing.md),
+                )
+            }
+
             Text(
                 text = article.headline,
                 color = Color.White,
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 maxLines = 2,
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(start = 20.dp, end = 20.dp, bottom = 28.dp),
+                    .padding(start = Spacing.lg, end = Spacing.lg, bottom = 34.dp),
             )
             Text(
-                text = formatNewsDate(article.publishedAt),
-                color = Color.White,
-                style = MaterialTheme.typography.bodySmall,
+                text = buildString {
+                    if (!article.newsSource.isNullOrBlank()) {
+                        append(article.newsSource.uppercase())
+                        append(" · ")
+                    }
+                    append(formatRelativeTime(article.publishedAt).uppercase())
+                },
+                style = NewsHubExtraType.eyebrow,
+                color = Color.White.copy(alpha = 0.8f),
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(start = 20.dp, bottom = 8.dp),
+                    .padding(start = Spacing.lg, bottom = Spacing.md),
             )
         }
     }

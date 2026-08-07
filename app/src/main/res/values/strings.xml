@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">News HUB</string>
-    <string name="title_top_headlines">Top Headlines</string>
+    <string name="title_home">Home</string>
     <string name="title_your_feed">My Feed</string>
-    <string name="title_favorites">Favorites</string>
+    <string name="title_saved">Saved</string>
     <string name="title_search">Search</string>
     <string name="title_mark_favorite">Mark Favorite</string>
     <string name="title_share">Share</string>
@@ -30,8 +30,8 @@
     <string name="content_description_user_interest_image">Interest Type item image</string>
     <string name="no_favorites_found">No Favorites</string>
     <string name="no_search_results">No results found</string>
+    <string name="no_stories_found">No stories in this category right now</string>
     <string name="search_prompt_message">Search for news articles</string>
-    <string name="loading_news_feeds">Loading feeds…</string>
     <string name="error_loading_feeds">Error occurred</string>
     <string name="splash_screen_img_desc">Image displaying a new paper</string>
     <string name="loading_failed_image_content_desc">Error image when loading failed</string>

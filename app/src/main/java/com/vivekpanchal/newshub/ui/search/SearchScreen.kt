@@ -26,8 +26,8 @@ import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.domain.model.Article
 import com.vivekpanchal.newshub.ui.common.EmptyContent
 import com.vivekpanchal.newshub.ui.common.ErrorContent
-import com.vivekpanchal.newshub.ui.common.LoadingContent
 import com.vivekpanchal.newshub.ui.common.NewsListItem
+import com.vivekpanchal.newshub.ui.common.ShimmerFeedList
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -69,7 +69,7 @@ fun SearchScreen(
         }
 
         when {
-            state.isLoading -> LoadingContent()
+            state.isLoading -> ShimmerFeedList()
             state.isError -> ErrorContent(onRetry = { viewModel.setIntent(SearchIntent.Retry) })
             !state.hasSearched -> EmptyContent(message = stringResource(R.string.search_prompt_message))
             state.articles.isEmpty() -> EmptyContent(message = stringResource(R.string.no_search_results))

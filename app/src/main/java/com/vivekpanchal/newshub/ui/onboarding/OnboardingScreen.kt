@@ -34,7 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.domain.model.Categories
-import com.vivekpanchal.newshub.ui.theme.NewsHubPrimary
+import com.vivekpanchal.newshub.ui.theme.NewsHubColors
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -58,11 +58,11 @@ fun OnboardingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(NewsHubPrimary),
+            .background(NewsHubColors.Ink),
     ) {
         Text(
             text = stringResource(R.string.splash_screen_choose_interests),
-            color = Color.White,
+            color = NewsHubColors.TextDark,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
@@ -90,12 +90,13 @@ fun OnboardingScreen(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(
-                                    if (isSelected) Color.Black.copy(alpha = 0.6f) else NewsHubPrimary.copy(alpha = 0.35f),
+                                    if (isSelected) Color.Black.copy(alpha = 0.6f) else NewsHubColors.Ink.copy(alpha = 0.35f),
                                 ),
                         )
                         Text(
                             text = interest.name,
                             color = Color.White,
+                            style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.align(Alignment.Center),
                         )
@@ -110,13 +111,13 @@ fun OnboardingScreen(
             } else {
                 state.selectedChoices.joinToString("   ")
             },
-            color = Color.White,
+            color = NewsHubColors.TextDark,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
         )
         Text(
             text = "${state.remainingChoices} ${stringResource(R.string.numOfChoices)}",
-            color = Color.White,
+            color = NewsHubColors.TextDark,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )

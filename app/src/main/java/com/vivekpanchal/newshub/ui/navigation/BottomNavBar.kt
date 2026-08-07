@@ -1,10 +1,10 @@
 package com.vivekpanchal.newshub.ui.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -25,9 +25,9 @@ private data class BottomNavTab(
 )
 
 private val TABS = listOf(
-    BottomNavTab(MainTabRoutes.TOP_HEADLINES, R.string.title_top_headlines, Icons.Filled.TrendingUp),
+    BottomNavTab(MainTabRoutes.HOME, R.string.title_home, Icons.Filled.Home),
     BottomNavTab(MainTabRoutes.YOUR_FEED, R.string.title_your_feed, Icons.Filled.Person),
-    BottomNavTab(MainTabRoutes.FAVORITES, R.string.title_favorites, Icons.Filled.Favorite),
+    BottomNavTab(MainTabRoutes.FAVORITES, R.string.title_saved, Icons.Filled.Bookmark),
     BottomNavTab(MainTabRoutes.SEARCH, R.string.title_search, Icons.Filled.Search),
 )
 
