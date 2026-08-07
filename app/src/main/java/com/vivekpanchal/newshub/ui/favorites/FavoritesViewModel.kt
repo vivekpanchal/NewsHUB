@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.vivekpanchal.newshub.data.repository.FavoritesRepository
 import com.vivekpanchal.newshub.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -15,7 +16,7 @@ class FavoritesViewModel @Inject constructor(
 
     init {
         favoritesRepository.getAllFavorites()
-            .onEach { articles -> setState { copy(articles = articles) } }
+            .onEach { articles -> setState { copy(articles = articles.toImmutableList()) } }
             .launchIn(viewModelScope)
     }
 

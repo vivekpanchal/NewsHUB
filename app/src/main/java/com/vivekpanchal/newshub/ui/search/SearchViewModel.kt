@@ -4,6 +4,7 @@ import com.vivekpanchal.newshub.data.repository.NewsRepository
 import com.vivekpanchal.newshub.data.repository.NewsResult
 import com.vivekpanchal.newshub.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,7 +29,8 @@ class SearchViewModel @Inject constructor(
         }
         setState { copy(isLoading = true, isError = false, hasSearched = true) }
         when (val result = newsRepository.searchNews(query)) {
-            is NewsResult.Success -> setState { copy(isLoading = false, articles = result.articles) }
+            is NewsResult.Success ->
+                setState { copy(isLoading = false, articles = result.articles.toImmutableList()) }
             is NewsResult.Error -> setState { copy(isLoading = false, isError = true) }
         }
     }

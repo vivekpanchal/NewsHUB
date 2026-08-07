@@ -4,6 +4,10 @@ import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.data.repository.UserPreferencesRepository
 import com.vivekpanchal.newshub.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+// kotlinx.collections.immutable's plus/minus (not kotlin.collections') so the result stays an
+// ImmutableList, matching OnboardingState.selectedChoices' type.
+import kotlinx.collections.immutable.minus
+import kotlinx.collections.immutable.plus
 import javax.inject.Inject
 
 @HiltViewModel

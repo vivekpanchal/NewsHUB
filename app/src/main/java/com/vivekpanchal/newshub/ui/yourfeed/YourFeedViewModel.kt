@@ -5,6 +5,7 @@ import com.vivekpanchal.newshub.data.repository.NewsResult
 import com.vivekpanchal.newshub.data.repository.UserPreferencesRepository
 import com.vivekpanchal.newshub.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
@@ -35,7 +36,7 @@ class YourFeedViewModel @Inject constructor(
     private suspend fun loadUserInterestsAndFeed() {
         val interests = userPreferencesRepository.userInterests.first()
         val category = currentState.selectedCategory ?: interests.firstOrNull()
-        setState { copy(userInterests = interests, selectedCategory = category) }
+        setState { copy(userInterests = interests.toImmutableList(), selectedCategory = category) }
         loadFeed(category)
     }
 
@@ -46,7 +47,8 @@ class YourFeedViewModel @Inject constructor(
         }
         setState { copy(isLoading = true, isError = false) }
         when (val result = newsRepository.searchNews(category)) {
-            is NewsResult.Success -> setState { copy(isLoading = false, articles = result.articles) }
+            is NewsResult.Success ->
+                setState { copy(isLoading = false, articles = result.articles.toImmutableList()) }
             is NewsResult.Error -> setState { copy(isLoading = false, isError = true) }
         }
     }

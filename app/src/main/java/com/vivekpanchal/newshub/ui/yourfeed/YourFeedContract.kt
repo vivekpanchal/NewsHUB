@@ -4,13 +4,15 @@ import com.vivekpanchal.newshub.domain.model.Article
 import com.vivekpanchal.newshub.mvi.UiEffect
 import com.vivekpanchal.newshub.mvi.UiIntent
 import com.vivekpanchal.newshub.mvi.UiState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 data class YourFeedState(
-    val userInterests: List<String> = emptyList(),
+    val userInterests: ImmutableList<String> = persistentListOf(),
     val selectedCategory: String? = null,
     val isLoading: Boolean = true,
     val isError: Boolean = false,
-    val articles: List<Article> = emptyList(),
+    val articles: ImmutableList<Article> = persistentListOf(),
 ) : UiState
 
 sealed interface YourFeedIntent : UiIntent {

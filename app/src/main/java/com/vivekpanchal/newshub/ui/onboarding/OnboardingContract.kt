@@ -3,9 +3,11 @@ package com.vivekpanchal.newshub.ui.onboarding
 import com.vivekpanchal.newshub.mvi.UiEffect
 import com.vivekpanchal.newshub.mvi.UiIntent
 import com.vivekpanchal.newshub.mvi.UiState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 data class OnboardingState(
-    val selectedChoices: List<String> = emptyList(),
+    val selectedChoices: ImmutableList<String> = persistentListOf(),
 ) : UiState {
     val remainingChoices: Int get() = (REQUIRED_CHOICES - selectedChoices.size).coerceAtLeast(0)
     val canProceed: Boolean get() = selectedChoices.size == REQUIRED_CHOICES
