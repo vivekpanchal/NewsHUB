@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.compose.ui.unit.dp
-import androidx.datastore.preferences.core.Preferences
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
@@ -15,8 +14,8 @@ import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
+import androidx.glance.appwidget.state.getAppWidgetState
 import androidx.glance.background
-import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
@@ -39,13 +38,16 @@ class NewsGlanceWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Single
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        provideContent {
-            val state = currentState<Preferences>()
-            val headline = state[WidgetPrefsKeys.HEADLINE] ?: context.getString(R.string.appwidget_news_headline_text)
-            val date = state[WidgetPrefsKeys.DATE] ?: context.getString(R.string.appwidget_news_date_text)
-            val imageUrl = state[WidgetPrefsKeys.IMAGE_URL]
-            val bitmap: Bitmap? = imageUrl?.let { loadBitmap(context, it) }
+        // Resolve everything suspend-y (persisted state, image decoding) before entering
+        // provideContent {} - its composable lambda isn't a coroutine scope, so suspend
+        // functions can't be called from inside it directly.
+        val prefs = getAppWidgetState(context, PreferencesGlanceStateDefinition, id)
+        val headline = prefs[WidgetPrefsKeys.HEADLINE] ?: context.getString(R.string.appwidget_news_headline_text)
+        val date = prefs[WidgetPrefsKeys.DATE] ?: context.getString(R.string.appwidget_news_date_text)
+        val imageUrl = prefs[WidgetPrefsKeys.IMAGE_URL]
+        val bitmap: Bitmap? = imageUrl?.let { loadBitmap(context, it) }
 
+        provideContent {
             Box(
                 modifier = GlanceModifier
                     .fillMaxSize()

@@ -4,10 +4,6 @@ import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.data.repository.UserPreferencesRepository
 import com.vivekpanchal.newshub.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-// kotlinx.collections.immutable's plus/minus (not kotlin.collections') so the result stays an
-// ImmutableList, matching OnboardingState.selectedChoices' type.
-import kotlinx.collections.immutable.minus
-import kotlinx.collections.immutable.plus
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,9 +21,11 @@ class OnboardingViewModel @Inject constructor(
     private fun toggleChoice(category: String) {
         val current = currentState.selectedChoices
         when {
-            current.contains(category) -> setState { copy(selectedChoices = current - category) }
+            // ImmutableList.add/remove (member methods, not the ambiguous kotlin.collections
+            // plus/minus operators) so the result stays an ImmutableList.
+            current.contains(category) -> setState { copy(selectedChoices = current.remove(category)) }
             current.size < OnboardingState.REQUIRED_CHOICES ->
-                setState { copy(selectedChoices = current + category) }
+                setState { copy(selectedChoices = current.add(category)) }
             else -> setEffect { OnboardingEffect.ShowMessage(R.string.userIntrestError) }
         }
     }
