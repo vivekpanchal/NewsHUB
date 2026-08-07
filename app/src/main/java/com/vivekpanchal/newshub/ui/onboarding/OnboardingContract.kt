@@ -3,11 +3,13 @@ package com.vivekpanchal.newshub.ui.onboarding
 import com.vivekpanchal.newshub.mvi.UiEffect
 import com.vivekpanchal.newshub.mvi.UiIntent
 import com.vivekpanchal.newshub.mvi.UiState
-import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
+// PersistentList (not the plain ImmutableList supertype) so toggleChoice() can use its add()/
+// remove() methods, which return a new PersistentList without needing a full copy each time.
 data class OnboardingState(
-    val selectedChoices: ImmutableList<String> = persistentListOf(),
+    val selectedChoices: PersistentList<String> = persistentListOf(),
 ) : UiState {
     val remainingChoices: Int get() = (REQUIRED_CHOICES - selectedChoices.size).coerceAtLeast(0)
     val canProceed: Boolean get() = selectedChoices.size == REQUIRED_CHOICES

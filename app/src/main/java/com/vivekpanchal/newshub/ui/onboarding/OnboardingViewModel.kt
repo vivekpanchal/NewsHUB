@@ -21,8 +21,6 @@ class OnboardingViewModel @Inject constructor(
     private fun toggleChoice(category: String) {
         val current = currentState.selectedChoices
         when {
-            // ImmutableList.add/remove (member methods, not the ambiguous kotlin.collections
-            // plus/minus operators) so the result stays an ImmutableList.
             current.contains(category) -> setState { copy(selectedChoices = current.remove(category)) }
             current.size < OnboardingState.REQUIRED_CHOICES ->
                 setState { copy(selectedChoices = current.add(category)) }
