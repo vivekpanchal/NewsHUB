@@ -1,9 +1,9 @@
 package com.vivekpanchal.newshub.ui.detail
 
 import com.vivekpanchal.newshub.domain.model.Article
-import com.vivekpanchal.newshub.mvi.UiEffect
-import com.vivekpanchal.newshub.mvi.UiIntent
-import com.vivekpanchal.newshub.mvi.UiState
+import com.vivekpanchal.newshub.util.mvi.UiEffect
+import com.vivekpanchal.newshub.util.mvi.UiIntent
+import com.vivekpanchal.newshub.util.mvi.UiState
 
 data class NewsDetailState(
     val article: Article,

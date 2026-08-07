@@ -3,7 +3,7 @@ package com.vivekpanchal.newshub.ui.yourfeed
 import com.vivekpanchal.newshub.data.repository.NewsRepository
 import com.vivekpanchal.newshub.data.repository.NewsResult
 import com.vivekpanchal.newshub.data.repository.UserPreferencesRepository
-import com.vivekpanchal.newshub.mvi.MviViewModel
+import com.vivekpanchal.newshub.util.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.first

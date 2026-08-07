@@ -1,9 +1,9 @@
 package com.vivekpanchal.newshub.ui.topheadlines
 
 import com.vivekpanchal.newshub.domain.model.Article
-import com.vivekpanchal.newshub.mvi.UiEffect
-import com.vivekpanchal.newshub.mvi.UiIntent
-import com.vivekpanchal.newshub.mvi.UiState
+import com.vivekpanchal.newshub.util.mvi.UiEffect
+import com.vivekpanchal.newshub.util.mvi.UiIntent
+import com.vivekpanchal.newshub.util.mvi.UiState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 

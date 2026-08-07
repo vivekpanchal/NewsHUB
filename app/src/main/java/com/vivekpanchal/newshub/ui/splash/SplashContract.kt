@@ -1,8 +1,8 @@
 package com.vivekpanchal.newshub.ui.splash
 
-import com.vivekpanchal.newshub.mvi.UiEffect
-import com.vivekpanchal.newshub.mvi.UiIntent
-import com.vivekpanchal.newshub.mvi.UiState
+import com.vivekpanchal.newshub.util.mvi.UiEffect
+import com.vivekpanchal.newshub.util.mvi.UiIntent
+import com.vivekpanchal.newshub.util.mvi.UiState
 
 data class SplashState(
     val isLoading: Boolean = true,

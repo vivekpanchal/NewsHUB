@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.data.repository.FavoritesRepository
 import com.vivekpanchal.newshub.domain.model.Article
-import com.vivekpanchal.newshub.mvi.MviViewModel
+import com.vivekpanchal.newshub.util.mvi.MviViewModel
 import com.vivekpanchal.newshub.ui.navigation.NavRoutes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

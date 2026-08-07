@@ -1,8 +1,8 @@
 package com.vivekpanchal.newshub.ui.onboarding
 
-import com.vivekpanchal.newshub.mvi.UiEffect
-import com.vivekpanchal.newshub.mvi.UiIntent
-import com.vivekpanchal.newshub.mvi.UiState
+import com.vivekpanchal.newshub.util.mvi.UiEffect
+import com.vivekpanchal.newshub.util.mvi.UiIntent
+import com.vivekpanchal.newshub.util.mvi.UiState
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

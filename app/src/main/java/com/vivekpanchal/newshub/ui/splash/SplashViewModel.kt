@@ -1,7 +1,7 @@
 package com.vivekpanchal.newshub.ui.splash
 
 import com.vivekpanchal.newshub.data.repository.UserPreferencesRepository
-import com.vivekpanchal.newshub.mvi.MviViewModel
+import com.vivekpanchal.newshub.util.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first

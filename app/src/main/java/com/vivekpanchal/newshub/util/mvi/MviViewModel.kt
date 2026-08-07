@@ -1,4 +1,4 @@
-package com.vivekpanchal.newshub.mvi
+package com.vivekpanchal.newshub.util.mvi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

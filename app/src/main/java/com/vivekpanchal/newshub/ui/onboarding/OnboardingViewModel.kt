@@ -2,7 +2,7 @@ package com.vivekpanchal.newshub.ui.onboarding
 
 import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.data.repository.UserPreferencesRepository
-import com.vivekpanchal.newshub.mvi.MviViewModel
+import com.vivekpanchal.newshub.util.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
