@@ -17,8 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.vivekpanchal.newshub.R
+import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 
 @Composable
 fun ErrorContent(onRetry: () -> Unit, modifier: Modifier = Modifier) {
@@ -60,4 +62,16 @@ fun EmptyContent(
             textAlign = TextAlign.Center,
         )
     }
+}
+
+@PreviewLightDark
+@Composable
+private fun ErrorContentPreview() {
+    NewsHubPreviewSurface { ErrorContent(onRetry = {}) }
+}
+
+@PreviewLightDark
+@Composable
+private fun EmptyContentPreview() {
+    NewsHubPreviewSurface { EmptyContent(message = "No stories in this category right now") }
 }

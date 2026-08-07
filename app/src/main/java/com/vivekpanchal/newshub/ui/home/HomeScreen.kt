@@ -12,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,7 +22,9 @@ import com.vivekpanchal.newshub.ui.common.CategoryChipRow
 import com.vivekpanchal.newshub.ui.common.EmptyContent
 import com.vivekpanchal.newshub.ui.common.ErrorContent
 import com.vivekpanchal.newshub.ui.common.NewsListItem
+import com.vivekpanchal.newshub.ui.common.PreviewSampleData
 import com.vivekpanchal.newshub.ui.common.ShimmerFeedList
+import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -39,9 +42,24 @@ fun HomeScreen(
         }
     }
 
+    HomeContent(
+        state = state,
+        onArticleClick = { viewModel.setIntent(HomeIntent.ArticleClicked(it)) },
+        onCategorySelected = { viewModel.setIntent(HomeIntent.CategorySelected(it)) },
+        onRetry = { viewModel.setIntent(HomeIntent.Retry) },
+    )
+}
+
+@Composable
+private fun HomeContent(
+    state: HomeState,
+    onArticleClick: (Article) -> Unit,
+    onCategorySelected: (String) -> Unit,
+    onRetry: () -> Unit,
+) {
     when {
         state.isLoading -> ShimmerFeedList()
-        state.isError -> ErrorContent(onRetry = { viewModel.setIntent(HomeIntent.Retry) })
+        state.isError -> ErrorContent(onRetry = onRetry)
         else -> LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 8.dp),
@@ -51,10 +69,7 @@ fun HomeScreen(
                     HomeSectionHeader(label = "Breaking now", live = true)
                 }
                 item(key = "breaking_carousel") {
-                    BreakingCarousel(
-                        articles = state.breakingArticles,
-                        onClick = { viewModel.setIntent(HomeIntent.ArticleClicked(it)) },
-                    )
+                    BreakingCarousel(articles = state.breakingArticles, onClick = onArticleClick)
                 }
             }
 
@@ -66,7 +81,7 @@ fun HomeScreen(
                     TrendingRailItem(
                         rank = index + 1,
                         article = article,
-                        onClick = { viewModel.setIntent(HomeIntent.ArticleClicked(article)) },
+                        onClick = { onArticleClick(article) },
                     )
                 }
             }
@@ -75,7 +90,7 @@ fun HomeScreen(
                 CategoryChipRow(
                     categories = HomeCategories.ALL,
                     selected = state.selectedCategory,
-                    onSelect = { viewModel.setIntent(HomeIntent.CategorySelected(it)) },
+                    onSelect = onCategorySelected,
                     modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                 )
             }
@@ -86,12 +101,48 @@ fun HomeScreen(
                 }
             } else {
                 items(state.feedArticles, key = { it.headline }) { article ->
-                    NewsListItem(
-                        article = article,
-                        onClick = { viewModel.setIntent(HomeIntent.ArticleClicked(article)) },
-                    )
+                    NewsListItem(article = article, onClick = { onArticleClick(article) })
                 }
             }
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun HomeContentPreview() {
+    NewsHubPreviewSurface {
+        HomeContent(
+            state = HomeState(
+                isLoading = false,
+                breakingArticles = PreviewSampleData.breakingRail,
+                trendingArticles = PreviewSampleData.trendingRail,
+                feedArticles = PreviewSampleData.articlesImmutable,
+            ),
+            onArticleClick = {},
+            onCategorySelected = {},
+            onRetry = {},
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun HomeContentLoadingPreview() {
+    NewsHubPreviewSurface {
+        HomeContent(state = HomeState(isLoading = true), onArticleClick = {}, onCategorySelected = {}, onRetry = {})
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun HomeContentErrorPreview() {
+    NewsHubPreviewSurface {
+        HomeContent(
+            state = HomeState(isLoading = false, isError = true),
+            onArticleClick = {},
+            onCategorySelected = {},
+            onRetry = {},
+        )
     }
 }

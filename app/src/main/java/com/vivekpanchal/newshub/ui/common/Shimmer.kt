@@ -25,7 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 import com.vivekpanchal.newshub.ui.theme.isReducedMotionEnabled
 
 /** Shimmering skeleton fill - stands in for a loading card/thumbnail instead of a spinner. */
@@ -88,6 +90,23 @@ fun ShimmerRailItem(modifier: Modifier = Modifier) {
         Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Box(modifier = Modifier.width(180.dp).height(14.dp).clip(RoundedCornerShape(4.dp)).shimmer())
             Box(modifier = Modifier.width(100.dp).height(10.dp).clip(RoundedCornerShape(4.dp)).shimmer())
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ShimmerFeedListPreview() {
+    NewsHubPreviewSurface { ShimmerFeedList(count = 2) }
+}
+
+@PreviewLightDark
+@Composable
+private fun ShimmerRailItemPreview() {
+    NewsHubPreviewSurface {
+        Column(modifier = Modifier.padding(16.dp)) {
+            ShimmerRailItem()
+            ShimmerRailItem()
         }
     }
 }

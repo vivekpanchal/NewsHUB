@@ -21,9 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.vivekpanchal.newshub.ui.theme.NewsHubExtraType
+import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 import com.vivekpanchal.newshub.ui.theme.Spacing
 import com.vivekpanchal.newshub.ui.theme.isReducedMotionEnabled
 
@@ -70,5 +72,19 @@ fun LiveBadge(
     ) {
         PulseDot(color = contentColor, size = 5.dp)
         Text(text = label, style = NewsHubExtraType.eyebrow, color = contentColor)
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun LiveBadgePreview() {
+    NewsHubPreviewSurface {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+            modifier = Modifier.padding(Spacing.lg),
+        ) {
+            LiveBadge(label = "BREAKING")
+            LiveBadge(label = "LIVE")
+        }
     }
 }

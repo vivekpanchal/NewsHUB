@@ -12,11 +12,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.vivekpanchal.newshub.R
+import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 
 private data class BottomNavTab(
     val route: String,
@@ -55,4 +58,10 @@ fun NewsHubBottomNavBar(navController: NavHostController) {
             )
         }
     }
+}
+
+@PreviewLightDark
+@Composable
+private fun NewsHubBottomNavBarPreview() {
+    NewsHubPreviewSurface { NewsHubBottomNavBar(navController = rememberNavController()) }
 }

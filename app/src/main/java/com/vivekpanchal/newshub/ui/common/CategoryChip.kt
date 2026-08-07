@@ -11,8 +11,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 import com.vivekpanchal.newshub.ui.theme.PillShape
 import com.vivekpanchal.newshub.ui.theme.newsHubSpring
 
@@ -71,5 +74,18 @@ fun CategoryChipRow(
                 onClick = { onSelect(category) },
             )
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun CategoryChipRowPreview() {
+    NewsHubPreviewSurface {
+        CategoryChipRow(
+            categories = listOf("Breaking", "India", "World", "Technology", "Business"),
+            selected = "India",
+            onSelect = {},
+            modifier = Modifier.padding(vertical = 12.dp),
+        )
     }
 }
