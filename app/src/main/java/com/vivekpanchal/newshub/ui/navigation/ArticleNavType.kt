@@ -14,7 +14,9 @@ object ArticleNavType : NavType<Article>(isNullableAllowed = false) {
     override fun get(bundle: Bundle, key: String): Article? =
         androidx.core.os.BundleCompat.getParcelable(bundle, key, Article::class.java)
 
-    override fun parseValue(value: String): Article = adapter.fromJson(Uri.decode(value))!!
+    override fun parseValue(value: String): Article =
+        adapter.fromJson(Uri.decode(value))
+            ?: throw IllegalArgumentException("Malformed Article nav argument: $value")
 
     override fun serializeAsValue(value: Article): String = Uri.encode(adapter.toJson(value))
 

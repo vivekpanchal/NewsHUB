@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.domain.model.Article
+import com.vivekpanchal.newshub.domain.model.stableKey
 import com.vivekpanchal.newshub.ui.common.CategoryChipRow
 import com.vivekpanchal.newshub.ui.common.EmptyContent
 import com.vivekpanchal.newshub.ui.common.ErrorContent
@@ -77,7 +78,7 @@ private fun HomeContent(
                 item(key = "trending_header") {
                     HomeSectionHeader(label = "Trending now")
                 }
-                itemsIndexed(state.trendingArticles, key = { _, article -> article.headline }) { index, article ->
+                itemsIndexed(state.trendingArticles, key = { _, article -> article.stableKey }) { index, article ->
                     TrendingRailItem(
                         rank = index + 1,
                         article = article,
@@ -100,7 +101,7 @@ private fun HomeContent(
                     EmptyContent(message = stringResource(R.string.no_stories_found))
                 }
             } else {
-                items(state.feedArticles, key = { it.headline }) { article ->
+                items(state.feedArticles, key = { it.stableKey }) { article ->
                     NewsListItem(article = article, onClick = { onArticleClick(article) })
                 }
             }

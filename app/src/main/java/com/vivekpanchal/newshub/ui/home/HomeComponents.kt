@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.domain.model.Article
+import com.vivekpanchal.newshub.domain.model.stableKey
 import com.vivekpanchal.newshub.ui.common.LiveBadge
 import com.vivekpanchal.newshub.ui.common.PreviewSampleData
 import com.vivekpanchal.newshub.ui.common.PulseDot
@@ -39,6 +40,7 @@ import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 import com.vivekpanchal.newshub.ui.theme.NewsHubShapes
 import com.vivekpanchal.newshub.ui.theme.Spacing
 import com.vivekpanchal.newshub.util.formatRelativeTime
+import java.util.Locale
 
 /** Eyebrow row for a Home section: mono uppercase label, optional pulsing dot for "live" sections. */
 @Composable
@@ -54,7 +56,7 @@ fun HomeSectionHeader(
         modifier = modifier.padding(horizontal = Spacing.lg, vertical = Spacing.sm),
     ) {
         if (live) PulseDot(color = MaterialTheme.colorScheme.primary, size = 6.dp)
-        Text(text = label.uppercase(), style = NewsHubExtraType.eyebrow, color = color)
+        Text(text = label.uppercase(Locale.ROOT), style = NewsHubExtraType.eyebrow, color = color)
     }
 }
 
@@ -66,7 +68,7 @@ fun BreakingCarousel(articles: List<Article>, onClick: (Article) -> Unit, modifi
         horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         contentPadding = PaddingValues(horizontal = Spacing.lg),
     ) {
-        items(articles, key = { it.headline }) { article ->
+        items(articles, key = { it.stableKey }) { article ->
             BreakingCard(article = article, onClick = { onClick(article) })
         }
     }
@@ -141,10 +143,10 @@ fun TrendingRailItem(rank: Int, article: Article, onClick: () -> Unit, modifier:
             Text(
                 text = buildString {
                     if (!article.newsSource.isNullOrBlank()) {
-                        append(article.newsSource.uppercase())
+                        append(article.newsSource.uppercase(Locale.ROOT))
                         append(" · ")
                     }
-                    append(formatRelativeTime(article.publishedAt).uppercase())
+                    append(formatRelativeTime(article.publishedAt).uppercase(Locale.ROOT))
                 },
                 style = NewsHubExtraType.eyebrow,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

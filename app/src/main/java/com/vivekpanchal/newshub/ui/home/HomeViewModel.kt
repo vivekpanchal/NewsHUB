@@ -3,6 +3,7 @@ package com.vivekpanchal.newshub.ui.home
 import com.vivekpanchal.newshub.data.repository.NewsRepository
 import com.vivekpanchal.newshub.data.repository.NewsResult
 import com.vivekpanchal.newshub.domain.model.Article
+import com.vivekpanchal.newshub.domain.model.stableKey
 import com.vivekpanchal.newshub.util.isRecentEnoughToBeBreaking
 import com.vivekpanchal.newshub.util.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -60,12 +61,13 @@ class HomeViewModel @Inject constructor(
     /**
      * No API flags "breaking" or "trending" - breaking is a recency heuristic over the front of the
      * response, trending is the response's own editorial order. The feed below excludes whatever
-     * trending already surfaced, so nothing repeats on one screen.
+     * breaking/trending already surfaced (by [stableKey]), so nothing repeats on one screen.
      */
     private fun deriveSections(articles: List<Article>): Triple<List<Article>, List<Article>, List<Article>> {
         val breaking = articles.take(8).filter { isRecentEnoughToBeBreaking(it.publishedAt) }.take(3)
         val trending = articles.take(6)
-        val feed = articles.drop(6)
+        val surfacedKeys = (breaking + trending).mapTo(mutableSetOf()) { it.stableKey }
+        val feed = articles.drop(6).filterNot { it.stableKey in surfacedKeys }
         return Triple(breaking, trending, feed)
     }
 }

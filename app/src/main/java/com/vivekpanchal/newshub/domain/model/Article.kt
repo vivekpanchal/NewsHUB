@@ -17,3 +17,7 @@ data class Article(
     val newsSource: String?,
     val newsUrl: String?,
 ) : Parcelable
+
+/** Stable identity for dedup/Compose-list-keys: [newsUrl] when present, else headline+timestamp. */
+val Article.stableKey: String
+    get() = newsUrl?.takeIf { it.isNotBlank() } ?: "$headline|$publishedAt"

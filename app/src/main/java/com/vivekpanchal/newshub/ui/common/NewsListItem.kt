@@ -29,6 +29,7 @@ import com.vivekpanchal.newshub.ui.theme.NewsHubShapes
 import com.vivekpanchal.newshub.ui.theme.Spacing
 import com.vivekpanchal.newshub.util.formatRelativeTime
 import com.vivekpanchal.newshub.util.isRecentEnoughToBeBreaking
+import java.util.Locale
 
 @Composable
 fun NewsListItem(
@@ -89,10 +90,10 @@ fun NewsListItem(
             Text(
                 text = buildString {
                     if (!article.newsSource.isNullOrBlank()) {
-                        append(article.newsSource.uppercase())
+                        append(article.newsSource.uppercase(Locale.ROOT))
                         append(" · ")
                     }
-                    append(formatRelativeTime(article.publishedAt).uppercase())
+                    append(formatRelativeTime(article.publishedAt).uppercase(Locale.ROOT))
                 },
                 style = NewsHubExtraType.eyebrow,
                 color = Color.White.copy(alpha = 0.8f),

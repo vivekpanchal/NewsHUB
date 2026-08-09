@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.domain.model.Article
+import com.vivekpanchal.newshub.domain.model.stableKey
 import com.vivekpanchal.newshub.ui.common.EmptyContent
 import com.vivekpanchal.newshub.ui.common.NewsListItem
 import com.vivekpanchal.newshub.ui.common.PreviewSampleData
@@ -52,7 +53,7 @@ private fun FavoritesContent(state: FavoritesState, onArticleClick: (Article) ->
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(8.dp),
         ) {
-            items(state.articles, key = { it.headline }) { article ->
+            items(state.articles, key = { it.stableKey }) { article ->
                 NewsListItem(article = article, onClick = { onArticleClick(article) })
             }
         }
