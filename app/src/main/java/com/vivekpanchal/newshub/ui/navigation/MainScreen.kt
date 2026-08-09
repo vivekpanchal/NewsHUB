@@ -17,8 +17,8 @@ import com.vivekpanchal.newshub.domain.model.Article
 import com.vivekpanchal.newshub.ui.common.ConnectivityViewModel
 import com.vivekpanchal.newshub.ui.common.NoConnectionBanner
 import com.vivekpanchal.newshub.ui.favorites.FavoritesScreen
+import com.vivekpanchal.newshub.ui.home.HomeScreen
 import com.vivekpanchal.newshub.ui.search.SearchScreen
-import com.vivekpanchal.newshub.ui.topheadlines.TopHeadlinesScreen
 import com.vivekpanchal.newshub.ui.yourfeed.YourFeedScreen
 
 @Composable
@@ -36,11 +36,11 @@ fun MainScreen(
             NoConnectionBanner(visible = !isConnected)
             NavHost(
                 navController = tabNavController,
-                startDestination = MainTabRoutes.TOP_HEADLINES,
+                startDestination = MainTabRoutes.HOME,
                 modifier = Modifier.weight(1f),
             ) {
-                composable(MainTabRoutes.TOP_HEADLINES) {
-                    TopHeadlinesScreen(onArticleClick = onArticleClick)
+                composable(MainTabRoutes.HOME) {
+                    HomeScreen(onArticleClick = onArticleClick)
                 }
                 composable(MainTabRoutes.YOUR_FEED) {
                     YourFeedScreen(onArticleClick = onArticleClick)

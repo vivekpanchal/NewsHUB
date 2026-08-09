@@ -5,12 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,25 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.vivekpanchal.newshub.R
-
-@Composable
-fun LoadingContent(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize().padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        CircularProgressIndicator()
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = stringResource(R.string.loading_news_feeds),
-            style = MaterialTheme.typography.titleMedium,
-            textAlign = TextAlign.Center,
-        )
-    }
-}
+import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 
 @Composable
 fun ErrorContent(onRetry: () -> Unit, modifier: Modifier = Modifier) {
@@ -80,4 +62,16 @@ fun EmptyContent(
             textAlign = TextAlign.Center,
         )
     }
+}
+
+@PreviewLightDark
+@Composable
+private fun ErrorContentPreview() {
+    NewsHubPreviewSurface { ErrorContent(onRetry = {}) }
+}
+
+@PreviewLightDark
+@Composable
+private fun EmptyContentPreview() {
+    NewsHubPreviewSurface { EmptyContent(message = "No stories in this category right now") }
 }

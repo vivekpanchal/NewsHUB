@@ -121,7 +121,9 @@ dependencies {
 
     // Networking
     implementation libs.retrofit.core
-    implementation libs.retrofit.gson
+    implementation libs.retrofit.moshi
+    implementation libs.moshi
+    kapt libs.moshi.codegen
     implementation libs.okhttp.logging.interceptor
 
     // Room
