@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
@@ -42,6 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -49,6 +50,8 @@ import coil.compose.AsyncImage
 import com.vivekpanchal.newshub.BuildConfig
 import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.ui.common.BannerAdView
+import com.vivekpanchal.newshub.ui.common.PreviewSampleData
+import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 import com.vivekpanchal.newshub.util.formatNewsDate
 import kotlinx.coroutines.flow.collectLatest
 
@@ -83,6 +86,27 @@ fun NewsDetailScreen(
         }
     }
 
+    NewsDetailContent(
+        state = state,
+        onBack = onBack,
+        onToggleFavorite = { viewModel.setIntent(NewsDetailIntent.ToggleFavorite) },
+        onShare = { viewModel.setIntent(NewsDetailIntent.Share) },
+        onOpenInBrowser = { viewModel.setIntent(NewsDetailIntent.OpenInBrowser) },
+        bannerAd = { BannerAdView(adUnitId = BuildConfig.ADMOB_BANNER_AD_UNIT_ID, modifier = Modifier.padding(bottom = 16.dp)) },
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun NewsDetailContent(
+    state: NewsDetailState,
+    onBack: () -> Unit,
+    onToggleFavorite: () -> Unit,
+    onShare: () -> Unit,
+    onOpenInBrowser: () -> Unit,
+    // Slotted out rather than called directly, so previews don't have to spin up a real AdView.
+    bannerAd: @Composable () -> Unit = {},
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -166,24 +190,21 @@ fun NewsDetailScreen(
                 DetailActionButton(
                     icon = if (state.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                     labelRes = R.string.title_mark_favorite,
-                    onClick = { viewModel.setIntent(NewsDetailIntent.ToggleFavorite) },
+                    onClick = onToggleFavorite,
                 )
                 DetailActionButton(
                     icon = Icons.Filled.Share,
                     labelRes = R.string.title_share,
-                    onClick = { viewModel.setIntent(NewsDetailIntent.Share) },
+                    onClick = onShare,
                 )
                 DetailActionButton(
                     icon = Icons.Filled.OpenInBrowser,
                     labelRes = R.string.title_open_in_browser,
-                    onClick = { viewModel.setIntent(NewsDetailIntent.OpenInBrowser) },
+                    onClick = onOpenInBrowser,
                 )
             }
 
-            BannerAdView(
-                adUnitId = BuildConfig.ADMOB_BANNER_AD_UNIT_ID,
-                modifier = Modifier.padding(bottom = 16.dp),
-            )
+            bannerAd()
         }
     }
 }
@@ -222,5 +243,33 @@ private fun DetailActionButton(
             Icon(icon, contentDescription = stringResource(labelRes))
         }
         Text(text = stringResource(labelRes), style = MaterialTheme.typography.labelSmall)
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun NewsDetailContentPreview() {
+    NewsHubPreviewSurface {
+        NewsDetailContent(
+            state = NewsDetailState(article = PreviewSampleData.standardArticle, isFavorite = false),
+            onBack = {},
+            onToggleFavorite = {},
+            onShare = {},
+            onOpenInBrowser = {},
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun NewsDetailContentFavoritedPreview() {
+    NewsHubPreviewSurface {
+        NewsDetailContent(
+            state = NewsDetailState(article = PreviewSampleData.breakingArticle, isFavorite = true),
+            onBack = {},
+            onToggleFavorite = {},
+            onShare = {},
+            onOpenInBrowser = {},
+        )
     }
 }

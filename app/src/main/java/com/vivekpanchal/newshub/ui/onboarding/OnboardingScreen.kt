@@ -29,12 +29,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.domain.model.Categories
-import com.vivekpanchal.newshub.ui.theme.NewsHubPrimary
+import com.vivekpanchal.newshub.ui.theme.NewsHubColors
+import com.vivekpanchal.newshub.ui.theme.NewsHubTheme
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -55,14 +58,27 @@ fun OnboardingScreen(
         }
     }
 
+    OnboardingContent(
+        state = state,
+        onToggleChoice = { viewModel.setIntent(OnboardingIntent.ToggleChoice(it)) },
+        onConfirm = { viewModel.setIntent(OnboardingIntent.ConfirmChoices) },
+    )
+}
+
+@Composable
+private fun OnboardingContent(
+    state: OnboardingState,
+    onToggleChoice: (String) -> Unit,
+    onConfirm: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(NewsHubPrimary),
+            .background(NewsHubColors.Ink),
     ) {
         Text(
             text = stringResource(R.string.splash_screen_choose_interests),
-            color = Color.White,
+            color = NewsHubColors.TextDark,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
@@ -75,7 +91,7 @@ fun OnboardingScreen(
             items(Categories.ALL) { interest ->
                 val isSelected = state.selectedChoices.contains(interest.name)
                 Card(
-                    onClick = { viewModel.setIntent(OnboardingIntent.ToggleChoice(interest.name)) },
+                    onClick = { onToggleChoice(interest.name) },
                     shape = RoundedCornerShape(5.dp),
                     modifier = Modifier.padding(8.dp).aspectRatio(1f),
                 ) {
@@ -90,12 +106,13 @@ fun OnboardingScreen(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(
-                                    if (isSelected) Color.Black.copy(alpha = 0.6f) else NewsHubPrimary.copy(alpha = 0.35f),
+                                    if (isSelected) Color.Black.copy(alpha = 0.6f) else NewsHubColors.Ink.copy(alpha = 0.35f),
                                 ),
                         )
                         Text(
                             text = interest.name,
                             color = Color.White,
+                            style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.align(Alignment.Center),
                         )
@@ -110,22 +127,36 @@ fun OnboardingScreen(
             } else {
                 state.selectedChoices.joinToString("   ")
             },
-            color = Color.White,
+            color = NewsHubColors.TextDark,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
         )
         Text(
             text = "${state.remainingChoices} ${stringResource(R.string.numOfChoices)}",
-            color = Color.White,
+            color = NewsHubColors.TextDark,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
 
         Button(
-            onClick = { viewModel.setIntent(OnboardingIntent.ConfirmChoices) },
+            onClick = onConfirm,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
             Text(stringResource(R.string.splash_screen_next_btn))
         }
+    }
+}
+
+// This screen commits to a single dark "wire desk" background (not the light/dark app theme), so
+// a single @Preview is enough - a @PreviewLightDark pair would just render the same thing twice.
+@Preview
+@Composable
+private fun OnboardingContentPreview() {
+    NewsHubTheme {
+        OnboardingContent(
+            state = OnboardingState(selectedChoices = persistentListOf("Technology", "Startups")),
+            onToggleChoice = {},
+            onConfirm = {},
+        )
     }
 }

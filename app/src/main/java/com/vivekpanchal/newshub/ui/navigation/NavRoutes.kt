@@ -13,7 +13,7 @@ object NavRoutes {
 }
 
 object MainTabRoutes {
-    const val TOP_HEADLINES = "top_headlines"
+    const val HOME = "home"
     const val YOUR_FEED = "your_feed"
     const val FAVORITES = "favorites"
     const val SEARCH = "search"

@@ -1,25 +1,29 @@
 package com.vivekpanchal.newshub.data.remote.dto
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class NewsHeadlineResponseDto(
-    @SerializedName("status") val status: String?,
-    @SerializedName("totalResults") val totalResults: Int?,
-    @SerializedName("articles") val articles: List<ArticleDto>?,
+    @Json(name = "status") val status: String?,
+    @Json(name = "totalResults") val totalResults: Int?,
+    @Json(name = "articles") val articles: List<ArticleDto>?,
 )
 
+@JsonClass(generateAdapter = true)
 data class ArticleDto(
-    @SerializedName("source") val source: SourceDto?,
-    @SerializedName("author") val author: String?,
-    @SerializedName("title") val title: String?,
-    @SerializedName("description") val description: String?,
-    @SerializedName("url") val url: String?,
-    @SerializedName("urlToImage") val urlToImage: String?,
-    @SerializedName("publishedAt") val publishedAt: String?,
-    @SerializedName("content") val content: String?,
+    @Json(name = "source") val source: SourceDto?,
+    @Json(name = "author") val author: String?,
+    @Json(name = "title") val title: String?,
+    @Json(name = "description") val description: String?,
+    @Json(name = "url") val url: String?,
+    @Json(name = "urlToImage") val urlToImage: String?,
+    @Json(name = "publishedAt") val publishedAt: String?,
+    @Json(name = "content") val content: String?,
 )
 
+@JsonClass(generateAdapter = true)
 data class SourceDto(
-    @SerializedName("id") val id: String?,
-    @SerializedName("name") val name: String?,
+    @Json(name = "id") val id: String?,
+    @Json(name = "name") val name: String?,
 )

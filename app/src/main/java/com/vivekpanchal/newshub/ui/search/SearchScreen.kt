@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,8 +27,10 @@ import com.vivekpanchal.newshub.R
 import com.vivekpanchal.newshub.domain.model.Article
 import com.vivekpanchal.newshub.ui.common.EmptyContent
 import com.vivekpanchal.newshub.ui.common.ErrorContent
-import com.vivekpanchal.newshub.ui.common.LoadingContent
 import com.vivekpanchal.newshub.ui.common.NewsListItem
+import com.vivekpanchal.newshub.ui.common.PreviewSampleData
+import com.vivekpanchal.newshub.ui.common.ShimmerFeedList
+import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -48,6 +51,23 @@ fun SearchScreen(
         }
     }
 
+    SearchContent(
+        state = state,
+        onQueryChanged = { viewModel.setIntent(SearchIntent.QueryChanged(it)) },
+        onSearch = { viewModel.setIntent(SearchIntent.Search) },
+        onRetry = { viewModel.setIntent(SearchIntent.Retry) },
+        onArticleClick = { viewModel.setIntent(SearchIntent.ArticleClicked(it)) },
+    )
+}
+
+@Composable
+private fun SearchContent(
+    state: SearchState,
+    onQueryChanged: (String) -> Unit,
+    onSearch: () -> Unit,
+    onRetry: () -> Unit,
+    onArticleClick: (Article) -> Unit,
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -55,22 +75,19 @@ fun SearchScreen(
         ) {
             OutlinedTextField(
                 value = state.query,
-                onValueChange = { viewModel.setIntent(SearchIntent.QueryChanged(it)) },
+                onValueChange = onQueryChanged,
                 label = { Text(stringResource(R.string.search_query_hint)) },
                 singleLine = true,
                 modifier = Modifier.weight(1f),
             )
-            Button(
-                onClick = { viewModel.setIntent(SearchIntent.Search) },
-                modifier = Modifier.padding(start = 8.dp),
-            ) {
+            Button(onClick = onSearch, modifier = Modifier.padding(start = 8.dp)) {
                 Text(stringResource(R.string.search_btn_label))
             }
         }
 
         when {
-            state.isLoading -> LoadingContent()
-            state.isError -> ErrorContent(onRetry = { viewModel.setIntent(SearchIntent.Retry) })
+            state.isLoading -> ShimmerFeedList()
+            state.isError -> ErrorContent(onRetry = onRetry)
             !state.hasSearched -> EmptyContent(message = stringResource(R.string.search_prompt_message))
             state.articles.isEmpty() -> EmptyContent(message = stringResource(R.string.no_search_results))
             else -> LazyColumn(
@@ -78,12 +95,37 @@ fun SearchScreen(
                 contentPadding = PaddingValues(8.dp),
             ) {
                 items(state.articles) { article ->
-                    NewsListItem(
-                        article = article,
-                        onClick = { viewModel.setIntent(SearchIntent.ArticleClicked(article)) },
-                    )
+                    NewsListItem(article = article, onClick = { onArticleClick(article) })
                 }
             }
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun SearchContentPreview() {
+    NewsHubPreviewSurface {
+        SearchContent(
+            state = SearchState(query = "AI", hasSearched = true, articles = PreviewSampleData.articlesImmutable),
+            onQueryChanged = {},
+            onSearch = {},
+            onRetry = {},
+            onArticleClick = {},
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun SearchContentPromptPreview() {
+    NewsHubPreviewSurface {
+        SearchContent(
+            state = SearchState(),
+            onQueryChanged = {},
+            onSearch = {},
+            onRetry = {},
+            onArticleClick = {},
+        )
     }
 }
