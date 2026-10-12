@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 import com.vivekpanchal.newshub.ui.theme.PillShape
+import com.vivekpanchal.newshub.ui.theme.Spacing
 import com.vivekpanchal.newshub.ui.theme.newsHubSpring
 
 /** A single pill chip with an animated fill/border transition between selected and unselected. */
@@ -65,7 +66,7 @@ fun CategoryChipRow(
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 4.dp),
+        contentPadding = PaddingValues(horizontal = Spacing.lg),
     ) {
         items(categories) { category ->
             CategoryChip(
@@ -82,7 +83,7 @@ fun CategoryChipRow(
 private fun CategoryChipRowPreview() {
     NewsHubPreviewSurface {
         CategoryChipRow(
-            categories = listOf("Breaking", "India", "World", "Technology", "Business"),
+            categories = listOf("India", "World", "Technology", "Business"),
             selected = "India",
             onSelect = {},
             modifier = Modifier.padding(vertical = 12.dp),

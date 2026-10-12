@@ -8,17 +8,19 @@ import com.vivekpanchal.newshub.util.mvi.UiState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-/** Home's category chip row. [BREAKING] is the default view (getTopHeadlines); the rest query by name. */
+/**
+ * Home's category chip row; each queries /everything by name. No "Breaking"/top-headlines entry:
+ * NewsAPI's top-headlines returns nothing for country=in, so that tab was always empty.
+ */
 object HomeCategories {
-    const val BREAKING = "Breaking"
     val ALL = listOf(
-        BREAKING, "India", "World", "Technology", "Business", "Sports",
+        "India", "World", "Technology", "Business", "Sports",
         "Entertainment", "Science", "Gaming", "AI", "Startups",
     )
 }
 
 data class HomeState(
-    val selectedCategory: String = HomeCategories.BREAKING,
+    val selectedCategory: String = HomeCategories.ALL.first(),
     val isLoading: Boolean = true,
     val error: NewsError? = null,
     // No API exposes real engagement/trending metrics - breaking is a recency heuristic, trending

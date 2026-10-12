@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -74,7 +75,8 @@ private fun OnboardingContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(NewsHubColors.Ink),
+            .background(NewsHubColors.Ink)
+            .systemBarsPadding(),
     ) {
         Text(
             text = stringResource(R.string.splash_screen_choose_interests),
