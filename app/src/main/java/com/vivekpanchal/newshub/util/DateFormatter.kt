@@ -1,5 +1,8 @@
 package com.vivekpanchal.newshub.util
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.vivekpanchal.newshub.R
 import java.time.Duration
 import java.time.Instant
 import java.time.OffsetDateTime
@@ -30,19 +33,44 @@ fun formatNewsDate(rawDate: String?): String {
     return OUTPUT_FORMAT.format(OffsetDateTime.ofInstant(instant, java.time.ZoneId.systemDefault()))
 }
 
+/** Structured result of [relativeTimeOf]; UI layers render this into localizable text via string resources. */
+sealed interface RelativeTime {
+    data object JustNow : RelativeTime
+    data class Minutes(val value: Long) : RelativeTime
+    data class Hours(val value: Long) : RelativeTime
+    data class Days(val value: Long) : RelativeTime
+    data class Absolute(val formatted: String) : RelativeTime
+}
+
 /**
- * "Just now" / "12m" / "3h" / "2d", falling back to "07 Aug" beyond a week - the wire-desk-style
- * relative timestamp used throughout the feed, reel, and card surfaces.
+ * Pure, Context-free computation behind the wire-desk-style relative timestamp used throughout
+ * the feed, reel, and card surfaces. Kept free of Android resources so it stays unit-testable;
+ * [formatRelativeTime] renders the result into localizable text.
  */
-fun formatRelativeTime(rawDate: String?, now: Instant = Instant.now()): String {
-    val instant = parseNewsInstant(rawDate) ?: return rawDate.orEmpty()
+fun relativeTimeOf(rawDate: String?, now: Instant = Instant.now()): RelativeTime? {
+    val instant = parseNewsInstant(rawDate) ?: return null
     val minutes = Duration.between(instant, now).toMinutes().coerceAtLeast(0)
     return when {
-        minutes < 1 -> "Just now"
-        minutes < 60 -> "${minutes}m"
-        minutes < 60 * 24 -> "${minutes / 60}h"
-        minutes < 60 * 24 * 7 -> "${minutes / (60 * 24)}d"
-        else -> SHORT_DATE_FORMAT.format(OffsetDateTime.ofInstant(instant, java.time.ZoneId.systemDefault()))
+        minutes < 1 -> RelativeTime.JustNow
+        minutes < 60 -> RelativeTime.Minutes(minutes)
+        minutes < 60 * 24 -> RelativeTime.Hours(minutes / 60)
+        minutes < 60 * 24 * 7 -> RelativeTime.Days(minutes / (60 * 24))
+        else -> RelativeTime.Absolute(
+            SHORT_DATE_FORMAT.format(OffsetDateTime.ofInstant(instant, java.time.ZoneId.systemDefault())),
+        )
+    }
+}
+
+/** "Just now" / "12m" / "3h" / "2d", falling back to "07 Aug" beyond a week - see [relativeTimeOf]. */
+@Composable
+fun formatRelativeTime(rawDate: String?, now: Instant = Instant.now()): String {
+    return when (val relative = relativeTimeOf(rawDate, now)) {
+        null -> rawDate.orEmpty()
+        RelativeTime.JustNow -> stringResource(R.string.date_relative_just_now)
+        is RelativeTime.Minutes -> stringResource(R.string.date_relative_minutes_short, relative.value)
+        is RelativeTime.Hours -> stringResource(R.string.date_relative_hours_short, relative.value)
+        is RelativeTime.Days -> stringResource(R.string.date_relative_days_short, relative.value)
+        is RelativeTime.Absolute -> relative.formatted
     }
 }
 

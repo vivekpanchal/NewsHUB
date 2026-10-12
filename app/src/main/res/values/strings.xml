@@ -52,4 +52,10 @@
     <string name="userIntrestError">You cannot enter more than 3 choices</string>
     <string name="numOfChoices">more choices to go!</string>
     <string name="enter_Intrests">Enter your interest first!</string>
+
+    <!-- Relative timestamps (DateFormatter.formatRelativeTime) -->
+    <string name="date_relative_just_now">Just now</string>
+    <string name="date_relative_minutes_short">%dm</string>
+    <string name="date_relative_hours_short">%dh</string>
+    <string name="date_relative_days_short">%dd</string>
 </resources>
