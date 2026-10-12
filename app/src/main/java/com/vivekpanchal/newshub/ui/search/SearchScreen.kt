@@ -87,7 +87,7 @@ private fun SearchContent(
 
         when {
             state.isLoading -> ShimmerFeedList()
-            state.isError -> ErrorContent(onRetry = onRetry)
+            state.error != null -> ErrorContent(error = state.error, onRetry = onRetry)
             !state.hasSearched -> EmptyContent(message = stringResource(R.string.search_prompt_message))
             state.articles.isEmpty() -> EmptyContent(message = stringResource(R.string.no_search_results))
             else -> LazyColumn(

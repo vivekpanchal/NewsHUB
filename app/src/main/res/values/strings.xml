@@ -33,6 +33,9 @@
     <string name="no_stories_found">No stories in this category right now</string>
     <string name="search_prompt_message">Search for news articles</string>
     <string name="error_loading_feeds">Error occurred</string>
+    <string name="error_network">No internet connection and nothing saved offline yet</string>
+    <string name="error_unauthorized">News service rejected the API key</string>
+    <string name="error_rate_limited">Too many requests. Try again later</string>
     <string name="splash_screen_img_desc">Image displaying a new paper</string>
     <string name="loading_failed_image_content_desc">Error image when loading failed</string>
 

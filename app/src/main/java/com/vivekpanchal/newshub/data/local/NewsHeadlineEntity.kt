@@ -6,10 +6,10 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.vivekpanchal.newshub.domain.model.Article
 
-// The unique index on news_headline, combined with the DAO's insert(OnConflictStrategy.REPLACE),
+// The unique index on news_url, combined with the DAO's insert(OnConflictStrategy.REPLACE),
 // makes addFavorite() idempotent: a double-tap before UI state settles updates the existing row
-// instead of inserting a duplicate.
-@Entity(tableName = "news_headlines", indices = [Index(value = ["news_headline"], unique = true)])
+// instead of inserting a duplicate. Keyed by URL because different stories can share a headline.
+@Entity(tableName = "news_headlines", indices = [Index(value = ["news_url"], unique = true)])
 data class NewsHeadlineEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

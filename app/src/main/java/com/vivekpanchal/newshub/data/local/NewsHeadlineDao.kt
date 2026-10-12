@@ -19,6 +19,7 @@ interface NewsHeadlineDao {
     @Delete
     suspend fun deleteNewsHeadline(headlineEntity: NewsHeadlineEntity)
 
-    @Query("SELECT * FROM news_headlines WHERE news_headline = :headline LIMIT 1")
-    fun loadNewsByHeadline(headline: String): Flow<NewsHeadlineEntity?>
+    /** Matches by URL; falls back to headline only for articles that have no URL. */
+    @Query("SELECT * FROM news_headlines WHERE news_url = :url OR (:url IS NULL AND news_headline = :headline) LIMIT 1")
+    fun loadFavorite(url: String?, headline: String): Flow<NewsHeadlineEntity?>
 }

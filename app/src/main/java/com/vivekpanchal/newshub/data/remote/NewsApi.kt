@@ -10,15 +10,15 @@ interface NewsApi {
     @GET("top-headlines")
     suspend fun getTopHeadlines(
         @Query("country") country: String,
-        @Query("apiKey") apiKey: String,
         @Query("language") language: String,
+        @Query("pageSize") pageSize: Int,
     ): Response<NewsHeadlineResponseDto>
 
     @GET("everything")
     suspend fun searchNews(
         @Query("q") query: String,
-        @Query("apiKey") apiKey: String,
         @Query("language") language: String,
+        @Query("pageSize") pageSize: Int,
     ): Response<NewsHeadlineResponseDto>
 
     companion object {

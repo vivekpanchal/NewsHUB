@@ -20,10 +20,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.vivekpanchal.newshub.R
+import com.vivekpanchal.newshub.data.repository.NewsError
 import com.vivekpanchal.newshub.ui.theme.NewsHubPreviewSurface
 
 @Composable
-fun ErrorContent(onRetry: () -> Unit, modifier: Modifier = Modifier) {
+fun ErrorContent(error: NewsError, onRetry: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize().padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -34,7 +35,14 @@ fun ErrorContent(onRetry: () -> Unit, modifier: Modifier = Modifier) {
             contentDescription = stringResource(R.string.loading_failed_image_content_desc),
         )
         Text(
-            text = stringResource(R.string.error_loading_feeds),
+            text = stringResource(
+                when (error) {
+                    NewsError.Network -> R.string.error_network
+                    NewsError.Unauthorized -> R.string.error_unauthorized
+                    NewsError.RateLimited -> R.string.error_rate_limited
+                    NewsError.Unknown -> R.string.error_loading_feeds
+                },
+            ),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(vertical = 16.dp),
@@ -67,7 +75,7 @@ fun EmptyContent(
 @PreviewLightDark
 @Composable
 private fun ErrorContentPreview() {
-    NewsHubPreviewSurface { ErrorContent(onRetry = {}) }
+    NewsHubPreviewSurface { ErrorContent(error = NewsError.Network, onRetry = {}) }
 }
 
 @PreviewLightDark

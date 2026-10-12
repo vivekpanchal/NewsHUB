@@ -33,28 +33,22 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun loadFeed(category: String) {
-        setState { copy(isLoading = true, isError = false) }
+        setState { copy(isLoading = true, error = null) }
 
-        val result = if (category == HomeCategories.BREAKING) {
-            newsRepository.getTopHeadlines()
-        } else {
-            newsRepository.searchNews(category)
-        }
-
-        when (result) {
+        when (val result = newsRepository.searchNews(category)) {
             is NewsResult.Success -> {
                 val (breaking, trending, feed) = deriveSections(result.articles)
                 setState {
                     copy(
                         isLoading = false,
-                        isError = false,
+                        error = null,
                         breakingArticles = breaking.toImmutableList(),
                         trendingArticles = trending.toImmutableList(),
                         feedArticles = feed.toImmutableList(),
                     )
                 }
             }
-            is NewsResult.Error -> setState { copy(isLoading = false, isError = true) }
+            is NewsResult.Error -> setState { copy(isLoading = false, error = result.reason) }
         }
     }
 

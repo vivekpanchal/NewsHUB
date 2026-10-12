@@ -1,5 +1,6 @@
 package com.vivekpanchal.newshub.ui.yourfeed
 
+import com.vivekpanchal.newshub.data.repository.NewsError
 import com.vivekpanchal.newshub.domain.model.Article
 import com.vivekpanchal.newshub.util.mvi.UiEffect
 import com.vivekpanchal.newshub.util.mvi.UiIntent
@@ -11,7 +12,7 @@ data class YourFeedState(
     val userInterests: ImmutableList<String> = persistentListOf(),
     val selectedCategory: String? = null,
     val isLoading: Boolean = true,
-    val isError: Boolean = false,
+    val error: NewsError? = null,
     val articles: ImmutableList<Article> = persistentListOf(),
 ) : UiState
 

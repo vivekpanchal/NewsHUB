@@ -1,5 +1,6 @@
 package com.vivekpanchal.newshub.ui.search
 
+import com.vivekpanchal.newshub.data.repository.NewsError
 import com.vivekpanchal.newshub.domain.model.Article
 import com.vivekpanchal.newshub.util.mvi.UiEffect
 import com.vivekpanchal.newshub.util.mvi.UiIntent
@@ -10,7 +11,7 @@ import kotlinx.collections.immutable.persistentListOf
 data class SearchState(
     val query: String = "",
     val isLoading: Boolean = false,
-    val isError: Boolean = false,
+    val error: NewsError? = null,
     val hasSearched: Boolean = false,
     val articles: ImmutableList<Article> = persistentListOf(),
 ) : UiState
