@@ -21,7 +21,7 @@ class NewsDetailViewModel @Inject constructor(
 ) {
 
     init {
-        favoritesRepository.isFavorite(currentState.article.headline)
+        favoritesRepository.isFavorite(currentState.article)
             .onEach { isFavorite -> setState { copy(isFavorite = isFavorite) } }
             .launchIn(viewModelScope)
     }

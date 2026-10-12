@@ -27,11 +27,11 @@ class SearchViewModel @Inject constructor(
             setEffect { SearchEffect.ShowEmptyQueryMessage }
             return
         }
-        setState { copy(isLoading = true, isError = false, hasSearched = true) }
+        setState { copy(isLoading = true, error = null, hasSearched = true) }
         when (val result = newsRepository.searchNews(query)) {
             is NewsResult.Success ->
                 setState { copy(isLoading = false, articles = result.articles.toImmutableList()) }
-            is NewsResult.Error -> setState { copy(isLoading = false, isError = true) }
+            is NewsResult.Error -> setState { copy(isLoading = false, error = result.reason) }
         }
     }
 }

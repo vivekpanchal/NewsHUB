@@ -1,5 +1,6 @@
 package com.vivekpanchal.newshub.ui.yourfeed
 
+import com.vivekpanchal.newshub.data.repository.NewsError
 import com.vivekpanchal.newshub.data.repository.NewsRepository
 import com.vivekpanchal.newshub.data.repository.NewsResult
 import com.vivekpanchal.newshub.data.repository.UserPreferencesRepository
@@ -42,14 +43,14 @@ class YourFeedViewModel @Inject constructor(
 
     private suspend fun loadFeed(category: String?) {
         if (category == null) {
-            setState { copy(isLoading = false, isError = true) }
+            setState { copy(isLoading = false, error = NewsError.Unknown) }
             return
         }
-        setState { copy(isLoading = true, isError = false) }
+        setState { copy(isLoading = true, error = null) }
         when (val result = newsRepository.searchNews(category)) {
             is NewsResult.Success ->
                 setState { copy(isLoading = false, articles = result.articles.toImmutableList()) }
-            is NewsResult.Error -> setState { copy(isLoading = false, isError = true) }
+            is NewsResult.Error -> setState { copy(isLoading = false, error = result.reason) }
         }
     }
 }

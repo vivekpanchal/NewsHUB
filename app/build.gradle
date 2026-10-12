@@ -35,7 +35,7 @@ android {
         config {
             keyAlias releaseKeyAlias
             keyPassword releaseKeyPassword
-            storeFile file('../app/keystore.jks')
+            storeFile file('keystore.jks')
             storePassword releaseStorePassword
         }
     }
@@ -44,8 +44,8 @@ android {
         applicationId "com.vivekpanchal.newshub"
         minSdk 24
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -60,9 +60,11 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            // keystore.jks is gitignored; without it and its password (e.g. CI) the release build is left unsigned.
+            if (file('keystore.jks').exists() && releaseStorePassword) signingConfig signingConfigs.config
         }
     }
 
@@ -87,6 +89,13 @@ android {
         resources {
             excludes += ['/META-INF/{AL2.0,LGPL2.1}']
         }
+    }
+}
+
+kapt {
+    arguments {
+        // Exported schemas let Room migrations be checked against the real previous version.
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 }
 

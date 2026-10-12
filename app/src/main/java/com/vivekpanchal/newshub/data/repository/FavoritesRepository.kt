@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 interface FavoritesRepository {
     fun getAllFavorites(): Flow<List<Article>>
-    fun isFavorite(headline: String): Flow<Boolean>
+    fun isFavorite(article: Article): Flow<Boolean>
     suspend fun addFavorite(article: Article)
     suspend fun removeFavorite(article: Article)
 }
@@ -25,8 +25,8 @@ class FavoritesRepositoryImpl @Inject constructor(
     override fun getAllFavorites(): Flow<List<Article>> =
         dao.loadAllNewsHeadlines().map { entities -> entities.map { it.toDomain() } }
 
-    override fun isFavorite(headline: String): Flow<Boolean> =
-        dao.loadNewsByHeadline(headline).map { it != null }
+    override fun isFavorite(article: Article): Flow<Boolean> =
+        dao.loadFavorite(article.newsUrl, article.headline).map { it != null }
 
     override suspend fun addFavorite(article: Article) {
         dao.insertNewsHeadline(article.toEntity())
@@ -35,7 +35,7 @@ class FavoritesRepositoryImpl @Inject constructor(
     override suspend fun removeFavorite(article: Article) {
         // Delete matches by primary key, so we must delete the entity actually stored in Room
         // (with its real id) rather than a freshly-mapped one whose id defaults to 0.
-        val existing = dao.loadNewsByHeadline(article.headline).first() ?: return
+        val existing = dao.loadFavorite(article.newsUrl, article.headline).first() ?: return
         dao.deleteNewsHeadline(existing)
     }
 }

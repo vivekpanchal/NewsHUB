@@ -67,7 +67,7 @@ private fun YourFeedContent(
 
         when {
             state.isLoading -> ShimmerFeedList()
-            state.isError -> ErrorContent(onRetry = onRetry)
+            state.error != null -> ErrorContent(error = state.error, onRetry = onRetry)
             else -> LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp),

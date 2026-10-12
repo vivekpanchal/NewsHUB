@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vivekpanchal.newshub.R
+import com.vivekpanchal.newshub.data.repository.NewsError
 import com.vivekpanchal.newshub.domain.model.Article
 import com.vivekpanchal.newshub.domain.model.stableKey
 import com.vivekpanchal.newshub.ui.common.CategoryChipRow
@@ -60,7 +61,7 @@ private fun HomeContent(
 ) {
     when {
         state.isLoading -> ShimmerFeedList()
-        state.isError -> ErrorContent(onRetry = onRetry)
+        state.error != null -> ErrorContent(error = state.error, onRetry = onRetry)
         else -> LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 8.dp),
@@ -140,7 +141,7 @@ private fun HomeContentLoadingPreview() {
 private fun HomeContentErrorPreview() {
     NewsHubPreviewSurface {
         HomeContent(
-            state = HomeState(isLoading = false, isError = true),
+            state = HomeState(isLoading = false, error = NewsError.Network),
             onArticleClick = {},
             onCategorySelected = {},
             onRetry = {},

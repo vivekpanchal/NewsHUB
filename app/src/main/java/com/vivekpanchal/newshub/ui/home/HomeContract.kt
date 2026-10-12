@@ -1,5 +1,6 @@
 package com.vivekpanchal.newshub.ui.home
 
+import com.vivekpanchal.newshub.data.repository.NewsError
 import com.vivekpanchal.newshub.domain.model.Article
 import com.vivekpanchal.newshub.util.mvi.UiEffect
 import com.vivekpanchal.newshub.util.mvi.UiIntent
@@ -19,7 +20,7 @@ object HomeCategories {
 data class HomeState(
     val selectedCategory: String = HomeCategories.BREAKING,
     val isLoading: Boolean = true,
-    val isError: Boolean = false,
+    val error: NewsError? = null,
     // No API exposes real engagement/trending metrics - breaking is a recency heuristic, trending
     // is response order. Nothing here is a fabricated number (see NewsResult / DateFormatter).
     val breakingArticles: ImmutableList<Article> = persistentListOf(),
